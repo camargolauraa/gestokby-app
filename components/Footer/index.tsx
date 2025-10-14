@@ -8,7 +8,8 @@ export default function Footer() {
         backgroundColor: "#fff",
         height: 30,
         alignItems: "center",
-        paddingTop: 15,
+        justifyContent: "center",
+        marginBottom: 20,
       }}
     >
       <Text style={{ color: "#000000", fontSize: 11, fontWeight: "600" }}>

@@ -1,10 +1,12 @@
-import Colors from "@/constants/Colors";
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+
+import { Link } from "expo-router";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 
 import Button from "@/components/Button";
 import Footer from "@/components/Footer";
 import HeaderOnboarding from "@/components/HeaderOnboarding";
+import Colors from "@/constants/Colors";
 
 export default function InitialPage() {
   return (
@@ -19,8 +21,15 @@ export default function InitialPage() {
         <Image source={require("../assets/images/principalLogo.png")} />
         {/* Botões */}
         <View style={{ gap: 10 }}>
-          <Button title="Fazer Login" />
-          <Button title="Fazer Cadastro" />
+          <Link href="../signIn" asChild>
+            <Pressable>
+              <Button title="Fazer Login" />
+            </Pressable>
+          </Link>
+
+          <Link href="/signUp" asChild>
+            <Button title="Fazer Cadastro" />
+          </Link>
         </View>
       </View>
       {/* Rodapé */}

@@ -18,9 +18,10 @@ export default function HeaderOnboarding() {
 const styles = StyleSheet.create({
   background: {
     backgroundColor: Colors.primary,
-    height: 85,
+    height: "100%",
     width: "100%",
     padding: 18,
+    marginTop: 28,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
