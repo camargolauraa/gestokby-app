@@ -1,14 +1,17 @@
 import React from "react";
-import { Image, Pressable, StyleSheet, View } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
+import { Image, Pressable, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import Colors from "../../app/constants/Colors";
 
 export default function HeaderPrincipal() {
   const navigation = useNavigation<any>();
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={styles.background}>
+    <View style={[styles.background, { paddingTop: insets.top + 8 }]}>
       {/* Logo da Esquerda */}
       <Image
         style={styles.logo} // Aplicado estilo
@@ -31,13 +34,15 @@ export default function HeaderPrincipal() {
 const styles = StyleSheet.create({
   background: {
     backgroundColor: Colors.primary,
-    height: "100%",
     width: "100%",
     padding: 18,
-    marginTop: 28,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
   },
   logo: {
     height: 49,

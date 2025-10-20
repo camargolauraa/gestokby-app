@@ -13,11 +13,7 @@ export default function InitialPage() {
 
   return (
     <View style={styles.background}>
-      <View
-        style={{ position: "absolute", top: 0, left: 0, right: 0, height: 77 }}
-      >
-        <HeaderOnboarding />
-      </View>
+      <HeaderOnboarding />
       {/* Logo principal e botões */}
       <View style={{ alignItems: "center", gap: 150 }}>
         <Image source={require("../assets/images/principalLogo.png")} />
@@ -33,9 +29,7 @@ export default function InitialPage() {
         </View>
       </View>
       {/* Rodapé */}
-      <View style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}>
-        <Footer />
-      </View>
+      <Footer />
     </View>
   );
 }
