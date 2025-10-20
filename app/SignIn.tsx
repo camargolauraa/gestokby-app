@@ -73,7 +73,10 @@ export default function SignIn() {
         {/* Botão customizado com Pressable */}
         <Pressable
           style={{ ...styles.button, alignSelf: "flex-end" }}
-          onPress={handleSignIn}
+          onPress={() => {
+            // handleSignIn();
+            navigation.navigate("Home");
+          }}
         >
           <Text style={styles.buttonText}>Entrar</Text>
         </Pressable>

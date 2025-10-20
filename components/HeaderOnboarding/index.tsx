@@ -11,7 +11,7 @@ export default function HeaderOnboarding() {
     <View style={styles.background}>
       <Pressable onPress={() => navigation.navigate("index")}>
         <Image
-          style={{ height: 49 }}
+          style={styles.logo}
           source={require("../../assets/images/headerLogo.png")}
         />
       </Pressable>
@@ -32,6 +32,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  logo: {
+    height: 49,
+    resizeMode: "contain",
   },
   text: {
     color: "#fff",
