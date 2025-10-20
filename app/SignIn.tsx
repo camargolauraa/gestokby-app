@@ -2,11 +2,15 @@ import React from "react";
 
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
+import { useNavigation } from "@react-navigation/native";
+
 import Colors from "@/app/constants/Colors";
 import Footer from "@/components/Footer";
 import HeaderOnboarding from "@/components/HeaderOnboarding";
 
 export default function SignIn() {
+  const navigation = useNavigation<any>();
+
   return (
     <View style={styles.background}>
       <View style={styles.headerContainer}>
@@ -32,10 +36,12 @@ export default function SignIn() {
           secureTextEntry
         />
 
-        <View style={styles.signupContainer}>
-          <Text style={styles.signupText}>Sua empresa não tem cadastro? </Text>
-          <Pressable>
-            <Text style={styles.signupLink}>Cadastre-se</Text>
+        <View style={styles.signinContainer}>
+          <Text style={styles.signinText}>
+            Sua empresa já está cadastrada?{" "}
+          </Text>
+          <Pressable onPress={() => navigation.navigate("SignUp")}>
+            <Text style={styles.signinLink}>Login</Text>
           </Pressable>
         </View>
 
@@ -91,16 +97,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     fontSize: 16,
   },
-  signupContainer: {
+  signinContainer: {
     flexDirection: "row",
     marginTop: 5,
   },
-  signupText: {
+  signinText: {
     fontSize: 12,
     color: Colors.greyText,
     fontWeight: "bold",
   },
-  signupLink: {
+  signinLink: {
     fontSize: 14,
     color: Colors.primary,
     fontWeight: "bold",
