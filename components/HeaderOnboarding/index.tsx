@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Image, StyleSheet, View } from "react-native";
 
-import Colors from "../../constants/Colors";
+import Colors from "../../app/constants/Colors";
 
 export default function HeaderOnboarding() {
   return (

@@ -2,9 +2,9 @@ import React from "react";
 
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
+import Colors from "@/app/constants/Colors";
 import Footer from "@/components/Footer";
 import HeaderOnboarding from "@/components/HeaderOnboarding";
-import Colors from "@/constants/Colors";
 
 export default function SignIn() {
   return (

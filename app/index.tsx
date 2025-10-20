@@ -1,14 +1,16 @@
 import React from "react";
 
-import { Link } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 
+import Colors from "@/app/constants/Colors";
 import Button from "@/components/Button";
 import Footer from "@/components/Footer";
 import HeaderOnboarding from "@/components/HeaderOnboarding";
-import Colors from "@/constants/Colors";
 
 export default function InitialPage() {
+  const navigation = useNavigation<any>();
+
   return (
     <View style={styles.background}>
       <View
@@ -21,15 +23,13 @@ export default function InitialPage() {
         <Image source={require("../assets/images/principalLogo.png")} />
         {/* Botões */}
         <View style={{ gap: 10 }}>
-          <Link href="../signIn" asChild>
-            <Pressable>
-              <Button title="Fazer Login" />
-            </Pressable>
-          </Link>
+          <Pressable onPress={() => navigation.navigate("SignIn")}>
+            <Button title="Login" />
+          </Pressable>
 
-          <Link href="/signUp" asChild>
+          <Pressable onPress={() => navigation.navigate("SignUp")}>
             <Button title="Fazer Cadastro" />
-          </Link>
+          </Pressable>
         </View>
       </View>
       {/* Rodapé */}
