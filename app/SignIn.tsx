@@ -11,6 +11,24 @@ import HeaderOnboarding from "@/components/HeaderOnboarding";
 export default function SignIn() {
   const navigation = useNavigation<any>();
 
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState("");
+
+  // SUBSTITUIR COM O BACKEND
+  const checkCredentials = (emailInput: string, passwordInput: string) => {
+    const mockUser = { email: "demo@company.com", password: "123456" };
+    return emailInput === mockUser.email && passwordInput === mockUser.password;
+  };
+
+  const handleSignIn = () => {
+    if (checkCredentials(email.trim(), password)) {
+      setError("");
+    } else {
+      setError("Senha e/ou e-mail incorretos");
+    }
+  };
+
   return (
     <View style={styles.background}>
       <View style={styles.headerContainer}>
@@ -27,6 +45,8 @@ export default function SignIn() {
           placeholderTextColor="#F5F7FA99"
           keyboardType="email-address"
           autoCapitalize="none"
+          value={email}
+          onChangeText={(t) => setEmail(t)}
         />
 
         <TextInput
@@ -34,6 +54,8 @@ export default function SignIn() {
           placeholder="Senha"
           placeholderTextColor="#F5F7FA99"
           secureTextEntry
+          value={password}
+          onChangeText={(t) => setPassword(t)}
         />
 
         <View style={styles.signinContainer}>
@@ -45,8 +67,14 @@ export default function SignIn() {
           </Pressable>
         </View>
 
+        {/* Mensagem de erro exibida abaixo do input de e-mail */}
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
         {/* Botão customizado com Pressable */}
-        <Pressable style={{ ...styles.button, alignSelf: "flex-end" }}>
+        <Pressable
+          style={{ ...styles.button, alignSelf: "flex-end" }}
+          onPress={handleSignIn}
+        >
           <Text style={styles.buttonText}>Entrar</Text>
         </Pressable>
       </View>
@@ -96,6 +124,13 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     fontSize: 16,
+  },
+  errorText: {
+    alignSelf: "flex-start",
+    color: "#ff3333",
+    fontSize: 12,
+    marginTop: 6,
+    marginBottom: -4,
   },
   signinContainer: {
     flexDirection: "row",
