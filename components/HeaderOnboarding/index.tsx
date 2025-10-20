@@ -9,10 +9,12 @@ export default function HeaderOnboarding() {
   const navigation = useNavigation<any>();
   return (
     <View style={styles.background}>
-      <Image
-        style={{ height: 49 }}
-        source={require("../../assets/images/headerLogo.png")}
-      />
+      <Pressable onPress={() => navigation.navigate("index")}>
+        <Image
+          style={{ height: 49 }}
+          source={require("../../assets/images/headerLogo.png")}
+        />
+      </Pressable>
       <Pressable onPress={() => navigation.navigate("Help")}>
         <Text style={styles.text}>Ajuda</Text>
       </Pressable>
