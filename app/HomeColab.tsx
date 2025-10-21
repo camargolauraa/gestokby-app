@@ -11,7 +11,7 @@ import {
 
 import Colors from "@/app/constants/Colors";
 import FooterSignedUp from "@/components/FooterSignedUp";
-import HeaderPrincipal from "@/components/HeaderPrincipal";
+import HeaderColab from "@/components/HeaderPrincipal";
 
 // Constante com dados de exemplo para a lista de produtos
 const DUMMY_PRODUCTS = [
@@ -52,7 +52,7 @@ export default function HomeColaborator() {
 
   return (
     <View style={styles.background}>
-      <HeaderPrincipal />
+      <HeaderColab />
       {/* Bloco de Informações do Colaborador */}
       <View style={styles.adminInfoContainer}>
         <Text style={styles.adminName}>Colaborador - Nome</Text>

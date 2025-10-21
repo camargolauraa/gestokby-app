@@ -1,3 +1,5 @@
+// TRAZER DADOS DO BACK END AQUI
+
 import React, { useEffect, useState } from "react";
 
 import { useNavigation } from "@react-navigation/native";
@@ -5,10 +7,10 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import Colors from "@/app/constants/Colors";
 import FooterSignedUp from "@/components/FooterSignedUp";
-import HeaderPrincipal from "@/components/HeaderPrincipal";
+import HeaderColab from "@/components/HeaderPrincipal";
 import InputTyped from "@/components/Input";
 
-export default function Profile() {
+export default function ProfileColab() {
   const navigation = useNavigation<any>();
 
   // Estado para armazenar os dados que viriam do backend
@@ -26,50 +28,46 @@ export default function Profile() {
 
   return (
     <View style={styles.background}>
-      <HeaderPrincipal />
+      <HeaderColab />
       {/* Conteúdo Principal - INPUTS */}
       <View style={styles.container}>
-        <Text style={styles.title}>PERFIL DA EMPRESA</Text>
+        <Text style={styles.title}>COLABORADOR</Text>
 
-        <InputTyped
-          label="Nome da Empresa:"
-          value={razaoSocial}
-          placeholder="Nome da Empresa:"
-        />
-        <InputTyped label="CNPJ:" value={cnpj} placeholder="CNPJ" />
-        <InputTyped
-          label="Telefone:"
-          value={telefone}
-          onChangeText={setTelefone}
-          keyboardType="phone-pad"
-          allowEdit={true}
-        />
-        <InputTyped
-          label="E-mail:"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          allowEdit={true}
-        />
-        <InputTyped
-          label="Administrador Responsável:"
-          value={administrador}
-          keyboardType="default"
-          onChangeText={setAdministrador}
-          allowEdit={true}
-        />
+        <InputTyped label="Nome da Empresa:" value={razaoSocial} />
+        <InputTyped label="CNPJ:" value={cnpj} />
+        <InputTyped label="Nome Completo:" value={administrador} />
+        <InputTyped label="E-mail:" value={email} />
+        <InputTyped label="Telefone:" value={telefone} />
       </View>
 
       {/* --- BOTÕES  --- */}
       <View style={styles.buttonWrapper}>
-        {/* Botão de Mudar para Colaborador */}
+        {/* Botão de acessar histórico de trabalho */}
         <Pressable
-          style={styles.switchButtonContainer}
+          style={styles.buttonContainer2}
           onPress={() => {
-            navigation.navigate("HomeColab");
+            navigation.navigate("Historic");
           }}
         >
-          <Text style={styles.switchButtonText}>Mudar para Colaborador</Text>
+          <Image
+            source={require("../assets/images/historicIcon.png")}
+            style={{ width: 16, height: 16 }}
+          />
+          <Text style={styles.buttonText2}>Histórico de trabalho</Text>
+        </Pressable>
+
+        {/* Botão de redefinir senha */}
+        <Pressable
+          style={styles.buttonContainer2}
+          onPress={() => {
+            navigation.navigate("ResetPassword");
+          }}
+        >
+          <Image
+            source={require("../assets/images/safeIcon.png")}
+            style={{ width: 16, height: 20 }}
+          />
+          <Text style={styles.buttonText2}>Redefinir minha senha</Text>
         </Pressable>
 
         {/* Botão de Sair */}
@@ -125,21 +123,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 15,
   },
-  switchButtonContainer: {
+  buttonContainer2: {
     backgroundColor: "#FFF",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    width: "50%",
+    width: "60%",
     height: 40,
+    paddingHorizontal: 15,
+    gap: 10,
     borderWidth: 1,
-    borderColor: Colors.primary,
+    borderColor: Colors.secondary,
     borderRadius: 10,
   },
-  switchButtonText: {
-    color: Colors.primary,
+  buttonText2: {
+    color: Colors.secondary,
     fontWeight: "bold",
     fontSize: 13,
+    textAlign: "left",
   },
   logoutButtonContainer: {
     backgroundColor: "#FFF",
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 10,
-    width: "50%",
+    width: "30%",
     height: 40,
     borderWidth: 1,
     borderColor: Colors.errorRed,

@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import Colors from "../../app/constants/Colors";
 
-export default function HeaderColab() {
+export default function HeaderPrincipal() {
   const navigation = useNavigation<any>();
   const insets = useSafeAreaInsets();
 
@@ -23,7 +23,7 @@ export default function HeaderColab() {
         <Pressable onPress={() => navigation.navigate("Notifications")}>
           <Image source={require("../../assets/images/notificationIcon.png")} />
         </Pressable>
-        <Pressable onPress={() => navigation.navigate("ProfileColab")}>
+        <Pressable onPress={() => navigation.navigate("Profile")}>
           <Image source={require("../../assets/images/profileIcon.png")} />
         </Pressable>
       </View>
