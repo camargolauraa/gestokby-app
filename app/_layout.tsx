@@ -9,6 +9,7 @@ export default function RootLayout() {
         <Stack.Screen name="SignIn" options={{ headerShown: false }} />
         <Stack.Screen name="SignUp" options={{ headerShown: false }} />
         <Stack.Screen name="Home" options={{ headerShown: false }} />
+        <Stack.Screen name="HomeColab" options={{ headerShown: false }} />
 
         <Stack.Screen name="Help" options={{ headerShown: false }} />
         <Stack.Screen name="Notifications" options={{ headerShown: false }} />

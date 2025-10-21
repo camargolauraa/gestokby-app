@@ -60,19 +60,32 @@ export default function Home() {
         />
       </View>
 
-      {/* Botão de Sair */}
-      <Pressable
-        style={styles.logoutButtonContainer}
-        onPress={() => {
-          navigation.navigate("SignIn");
-        }}
-      >
-        <Image
-          source={require("../assets/images/exitIcon.png")}
-          style={{ width: 16, height: 16, marginLeft: 5 }}
-        />
-        <Text style={styles.logoutButtonText}>Sair</Text>
-      </Pressable>
+      {/* --- BOTÕES  --- */}
+      <View style={styles.buttonWrapper}>
+        {/* Botão de Mudar para Colaborador */}
+        <Pressable
+          style={styles.switchButtonContainer}
+          onPress={() => {
+            navigation.navigate("HomeColab");
+          }}
+        >
+          <Text style={styles.switchButtonText}>Mudar para Colaborador</Text>
+        </Pressable>
+
+        {/* Botão de Sair */}
+        <Pressable
+          style={styles.logoutButtonContainer}
+          onPress={() => {
+            navigation.navigate("SignIn");
+          }}
+        >
+          <Image
+            source={require("../assets/images/exitIcon.png")}
+            style={{ width: 16, height: 16 }}
+          />
+          <Text style={styles.logoutButtonText}>Sair</Text>
+        </Pressable>
+      </View>
 
       {/* Rodapé */}
       <View style={styles.footerContainer}>
@@ -105,20 +118,37 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     alignSelf: "center",
-    margin: 5,
+    marginBottom: 10,
+  },
+  buttonWrapper: {
+    marginTop: 40,
+    alignItems: "center",
+    gap: 15,
+  },
+  switchButtonContainer: {
+    backgroundColor: "#FFF",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "50%",
+    height: 40,
+    borderWidth: 1,
+    borderColor: Colors.primary,
+    borderRadius: 10,
+  },
+  switchButtonText: {
+    color: Colors.primary,
+    fontWeight: "bold",
+    fontSize: 13,
   },
   logoutButtonContainer: {
     backgroundColor: "#FFF",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    alignSelf: "center",
-    marginTop: 200,
     gap: 10,
-
-    width: "25%",
+    width: "50%",
     height: 40,
-
     borderWidth: 1,
     borderColor: Colors.errorRed,
     borderRadius: 10,

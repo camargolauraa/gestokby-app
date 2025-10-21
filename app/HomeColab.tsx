@@ -47,25 +47,22 @@ const DUMMY_PRODUCTS = [
   },
 ];
 
-export default function Home() {
+export default function HomeColaborator() {
   const navigation = useNavigation<any>();
 
   return (
     <View style={styles.background}>
       <HeaderPrincipal />
-      {/* Bloco de Informações do Administrador */}
+      {/* Bloco de Informações do Colaborador */}
       <View style={styles.adminInfoContainer}>
-        <Text style={styles.adminName}>ADMINISTRADOR - Nome</Text>
+        <Text style={styles.adminName}>Colaborador - Nome</Text>
         <Text style={styles.companyDetails}>Empresa XXXXXXX XXXXXX</Text>
         <Text style={styles.companyDetails}>CNPJ: XX.XXX.XXX/XXXX-XX</Text>
       </View>
       {/* Bloco de Navegação */}
       <View style={styles.listHeader}>
-        <Text style={styles.listTitle}>Meus produtos:</Text>
+        <Text style={styles.listTitle}>Produtos em estoque:</Text>
         <View style={styles.actionIcons}>
-          <Pressable onPress={() => navigation.navigate("AddBatch")}>
-            <Image source={require("../assets/images/plusIcon.png")} />
-          </Pressable>
           <Pressable>
             <Image source={require("../assets/images/searchIcon.png")} />
           </Pressable>
