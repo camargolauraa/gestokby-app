@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import {
   Image,
   Pressable,
@@ -10,8 +10,9 @@ import {
 } from "react-native";
 
 import Colors from "@/app/constants/Colors";
-import FooterSignedUp from "@/components/FooterSignedUp";
+import FooterColabSignedUp from "@/components/FooterColabSignedUp";
 import HeaderColab from "@/components/HeaderPrincipal";
+import Search from "@/components/Search";
 
 // Constante com dados de exemplo para a lista de produtos
 const DUMMY_PRODUCTS = [
@@ -49,6 +50,7 @@ const DUMMY_PRODUCTS = [
 
 export default function HomeColaborator() {
   const navigation = useNavigation<any>();
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
 
   return (
     <View style={styles.background}>
@@ -63,7 +65,7 @@ export default function HomeColaborator() {
       <View style={styles.listHeader}>
         <Text style={styles.listTitle}>Produtos em estoque:</Text>
         <View style={styles.actionIcons}>
-          <Pressable>
+          <Pressable onPress={() => setIsSearchVisible(!isSearchVisible)}>
             <Image source={require("../assets/images/searchIcon.png")} />
           </Pressable>
           <Pressable>
@@ -71,6 +73,12 @@ export default function HomeColaborator() {
           </Pressable>
         </View>
       </View>
+
+      {isSearchVisible && (
+        <View style={styles.searchBarContainer}>
+          <Search navigation={navigation} />
+        </View>
+      )}
 
       {/* ScrollView */}
 
@@ -104,7 +112,7 @@ export default function HomeColaborator() {
 
       {/* Rodapé */}
       <View style={styles.footerContainer}>
-        <FooterSignedUp />
+        <FooterColabSignedUp />
       </View>
     </View>
   );
@@ -170,6 +178,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 30,
+  },
+  searchBarContainer: {
+    paddingHorizontal: 20,
+    marginBottom: 10,
+    zIndex: 10,
   },
   productCard: {
     backgroundColor: "#fff",

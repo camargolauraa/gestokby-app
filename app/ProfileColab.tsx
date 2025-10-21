@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import Colors from "@/app/constants/Colors";
-import FooterSignedUp from "@/components/FooterSignedUp";
+import FooterColabSignedUp from "@/components/FooterColabSignedUp";
 import HeaderColab from "@/components/HeaderPrincipal";
 import InputTyped from "@/components/Input";
 
@@ -87,7 +87,7 @@ export default function ProfileColab() {
 
       {/* Rodapé */}
       <View style={styles.footerContainer}>
-        <FooterSignedUp />
+        <FooterColabSignedUp />
       </View>
     </View>
   );
