@@ -13,6 +13,7 @@ export default function RootLayout() {
         <Stack.Screen name="Help" options={{ headerShown: false }} />
         <Stack.Screen name="Notifications" options={{ headerShown: false }} />
         <Stack.Screen name="Profile" options={{ headerShown: false }} />
+        <Stack.Screen name="AddBatch" options={{ headerShown: false }} />
       </Stack>
     </SafeAreaProvider>
   );

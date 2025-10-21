@@ -63,7 +63,7 @@ export default function Home() {
       <View style={styles.listHeader}>
         <Text style={styles.listTitle}>Meus produtos:</Text>
         <View style={styles.actionIcons}>
-          <Pressable>
+          <Pressable onPress={() => navigation.navigate("AddBatch")}>
             <Image source={require("../assets/images/plusIcon.png")} />
           </Pressable>
           <Pressable>
