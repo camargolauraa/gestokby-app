@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import {
   Image,
   Pressable,
@@ -12,6 +12,7 @@ import {
 import Colors from "@/app/constants/Colors";
 import FooterSignedUp from "@/components/FooterSignedUp";
 import HeaderPrincipal from "@/components/HeaderPrincipal";
+import Search from "@/components/Search";
 
 // Constante com dados de exemplo para a lista de produtos
 const DUMMY_PRODUCTS = [
@@ -49,6 +50,7 @@ const DUMMY_PRODUCTS = [
 
 export default function Home() {
   const navigation = useNavigation<any>();
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
 
   return (
     <View style={styles.background}>
@@ -63,17 +65,20 @@ export default function Home() {
       <View style={styles.listHeader}>
         <Text style={styles.listTitle}>Meus produtos:</Text>
         <View style={styles.actionIcons}>
+          <Pressable onPress={() => setIsSearchVisible(!isSearchVisible)}>
+            <Image source={require("../assets/images/searchIcon.png")} />
+          </Pressable>
           <Pressable onPress={() => navigation.navigate("AddBatch")}>
             <Image source={require("../assets/images/plusIcon.png")} />
           </Pressable>
-          <Pressable>
-            <Image source={require("../assets/images/searchIcon.png")} />
-          </Pressable>
-          <Pressable>
-            <Image source={require("../assets/images/filterIcon.png")} />
-          </Pressable>
         </View>
       </View>
+
+      {isSearchVisible && (
+        <View style={styles.searchBarContainer}>
+          <Search navigation={navigation} />
+        </View>
+      )}
 
       {/* ScrollView */}
 
@@ -91,16 +96,9 @@ export default function Home() {
                 Validade: {product.validade}
               </Text>
             </View>
-
-            <View style={styles.productStatusIcons}>
-              {product.hasWarning && (
-                <Image source={require("../assets/images/alertIcon.png")} />
-              )}
-
-              {product.isChecked && (
-                <Image source={require("../assets/images/checkIcon.png")} />
-              )}
-            </View>
+            {product.isChecked && (
+              <Image source={require("../assets/images/checkIcon.png")} />
+            )}
           </View>
         ))}
       </ScrollView>
@@ -173,6 +171,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 30,
+  },
+  searchBarContainer: {
+    paddingHorizontal: 20,
+    marginBottom: 10,
+    zIndex: 10,
   },
   productCard: {
     backgroundColor: "#fff",

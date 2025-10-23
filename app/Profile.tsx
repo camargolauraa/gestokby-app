@@ -62,16 +62,6 @@ export default function Profile() {
 
       {/* --- BOTÕES  --- */}
       <View style={styles.buttonWrapper}>
-        {/* Botão de Mudar para Colaborador */}
-        <Pressable
-          style={styles.switchButtonContainer}
-          onPress={() => {
-            navigation.navigate("HomeColab");
-          }}
-        >
-          <Text style={styles.switchButtonText}>Mudar para Colaborador</Text>
-        </Pressable>
-
         {/* Botão de Sair */}
         <Pressable
           style={styles.logoutButtonContainer}

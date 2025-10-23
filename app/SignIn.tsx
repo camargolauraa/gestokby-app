@@ -59,11 +59,9 @@ export default function SignIn() {
         />
 
         <View style={styles.signinContainer}>
-          <Text style={styles.signinText}>
-            Sua empresa já está cadastrada?{" "}
-          </Text>
+          <Text style={styles.signinText}>Sua empresa não tem cadastro? </Text>
           <Pressable onPress={() => navigation.navigate("SignUp")}>
-            <Text style={styles.signinLink}>Login</Text>
+            <Text style={styles.signinLink}>Cadastre-se</Text>
           </Pressable>
         </View>
 

@@ -37,6 +37,13 @@ export default function SignUp() {
 
         <TextInput
           style={styles.input}
+          placeholder="Responsável pela empresa"
+          placeholderTextColor="#F5F7FA99"
+          autoCapitalize="words"
+        />
+
+        <TextInput
+          style={styles.input}
           placeholder="Telefone"
           placeholderTextColor="#F5F7FA99"
           keyboardType="phone-pad"
@@ -101,6 +108,7 @@ const styles = StyleSheet.create({
     height: 77,
   },
   box: {
+    marginTop: 65,
     width: "85%",
     backgroundColor: "#fff",
     borderRadius: 15,
@@ -108,6 +116,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 25,
     alignItems: "center",
+    justifyContent: "center",
     gap: 20,
   },
   title: {
