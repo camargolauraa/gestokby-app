@@ -59,7 +59,7 @@ export default function Home() {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
 
   const [userData, setUserData] = useState<IUserData | null>(null);
-  console.log("User Data:", userData);
+  // console.log("User Data:", userData);
 
   useEffect(() => {
     async function loadUserData() {

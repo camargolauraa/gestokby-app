@@ -1,28 +1,122 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 
-import { useNavigation } from "@react-navigation/native";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { Alert, Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import Colors from "@/app/constants/Colors";
 import FooterSignedUp from "@/components/FooterSignedUp";
 import HeaderPrincipal from "@/components/HeaderPrincipal";
 import InputTyped from "@/components/Input";
+import { IEditUser, IUserData } from "@/interfaces/IAuth";
+import { editUser } from "@/services/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const STORAGE_KEYS = {
+  USER: "@meuApp:user",
+  TOKEN: "@meuApp:token",
+};
 
 export default function Profile() {
   const navigation = useNavigation<any>();
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = React.useState("");
+
   // Estado para armazenar os dados que viriam do backend
   const [razaoSocial, setRazaoSocial] = useState("");
   const [cnpj, setCnpj] = useState("");
-  const [administrador, setAdministrador] = useState("");
   const [telefone, setTelefone] = useState("");
   const [email, setEmail] = useState("");
 
-  useEffect(() => {
-    // LÓGICA PARA BUSCAR DADOS DO BACKEND
-    setRazaoSocial("nome da empresa.......");
-    setCnpj("XX.XXX.XXX/XXXX-XX");
-  }, []);
+  const [id, setId] = useState<string>("");
+
+  const loadUserData = async () => {
+    console.log("A carregar dados do utilizador...");
+    try {
+      const storedUserString = await AsyncStorage.getItem(STORAGE_KEYS.USER);
+      if (storedUserString) {
+        const user = JSON.parse(storedUserString) as IUserData; // console.log("Dados do utilizador carregados:", user);
+        setRazaoSocial(user.razao_social);
+        setCnpj(user.cnpj);
+        setTelefone(user.phone);
+        setEmail(user.email);
+        setId(user.id);
+      } else {
+        console.log("Nenhum dado de utilizador encontrado."); // Se não achar o utilizador, força o logout
+        await handleLogout();
+      }
+    } catch (e) {
+      console.error("Falha ao carregar dados do utilizador", e);
+    }
+  }; // 4. Substituímos useEffect por useFocusEffect // Isto corre sempre que a tela 'Profile' é focada
+
+  useFocusEffect(
+    useCallback(() => {
+      loadUserData();
+    }, [])
+  );
+
+  const handleEditUser = async () => {
+    if (!id) {
+      Alert.alert(
+        "Erro",
+        "ID do utilizador não encontrado. Tente logar novamente."
+      );
+      return;
+    }
+
+    const payload: IEditUser = {
+      user_id: id,
+      razao_social: razaoSocial,
+      cnpj: cnpj,
+      phone: telefone,
+      email: email,
+    };
+    setIsLoading(true);
+
+    try {
+      const response = await editUser(payload);
+
+      if (response && "status" in response && response.status === 200) {
+        // --- 5. CORREÇÃO PRINCIPAL ---
+        // Se a API guardou, guardamos no AsyncStorage também
+        const updatedUserData: IUserData = {
+          id: id,
+          razao_social: razaoSocial,
+          cnpj: cnpj,
+          phone: telefone,
+          email: email,
+        };
+        await AsyncStorage.setItem(
+          STORAGE_KEYS.USER,
+          JSON.stringify(updatedUserData)
+        ); // --- Fim da Correção ---
+        Alert.alert("Sucesso", "Perfil atualizado!");
+        navigation.navigate("Home");
+        setError("");
+      } else if (response && "data" in response) {
+        setError(response.data?.error);
+      } else if (response && "error" in response) {
+        setError(String(response.error));
+      }
+    } catch (error) {
+      Alert.alert("Erro", "Ocorreu um erro ao realizar o cadastro.");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }; // 6. CORREÇÃO DO LOGOUT
+
+  const handleLogout = async () => {
+    console.log("A fazer logout..."); // Limpa o token E o utilizador do storage
+    await AsyncStorage.removeItem(STORAGE_KEYS.TOKEN);
+    await AsyncStorage.removeItem(STORAGE_KEYS.USER); // Reseta a navegação para a tela de SignIn // Isto impede o utilizador de "voltar" para a Home
+
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "SignIn" }], // Certifique-se que o nome da rota é 'SignIn'
+    });
+  };
 
   return (
     <View style={styles.background}>
@@ -51,13 +145,15 @@ export default function Profile() {
           keyboardType="email-address"
           allowEdit={true}
         />
-        <InputTyped
-          label="Administrador Responsável:"
-          value={administrador}
-          keyboardType="default"
-          onChangeText={setAdministrador}
-          allowEdit={true}
-        />
+        <Pressable
+          style={styles.confirmButton}
+          onPress={() => {
+            handleEditUser();
+            console.log("Confirmar alterações");
+          }}
+        >
+          <Text style={styles.confirmButtonText}>Confirmar</Text>
+        </Pressable>
       </View>
 
       {/* --- BOTÕES  --- */}
@@ -153,5 +249,17 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  confirmButton: {
+    backgroundColor: Colors.primary,
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignContent: "center",
+    alignItems: "center",
+    marginTop: 15,
+  },
+  confirmButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
   },
 });

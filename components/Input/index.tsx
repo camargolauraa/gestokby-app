@@ -2,18 +2,11 @@
 
 // Arrumar: - cor de fundo quando allowEdit for false
 //          - abrir teclado automaticamente ao clicar no ícone de editar
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 
 import Colors from "@/app/constants/Colors";
 
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
 type InputTypedProps = {
   placeholder?: string;
@@ -32,16 +25,7 @@ export default function InputTyped({
   onChangeText,
   allowEdit = false,
 }: InputTypedProps) {
-  const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef<TextInput>(null);
-  const handleEditPress = () => {
-    setIsEditing(true);
-    useEffect(() => {
-      if (isEditing) {
-        inputRef.current?.focus();
-      }
-    }, [isEditing]);
-  };
   return (
     <View
       style={[
@@ -59,18 +43,9 @@ export default function InputTyped({
         value={value}
         onChangeText={onChangeText}
         ref={inputRef}
-        editable={isEditing}
-        onBlur={() => setIsEditing(false)}
+        editable={allowEdit}
         placeholderTextColor={allowEdit ? "#999" : "#000"}
       />
-      {allowEdit && (
-        <TouchableOpacity onPress={handleEditPress}>
-          <Image
-            source={require("../../assets/images/editIcon.png")}
-            style={{ width: 14, height: 14 }}
-          />
-        </TouchableOpacity>
-      )}
     </View>
   );
 }

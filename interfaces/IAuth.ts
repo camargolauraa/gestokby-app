@@ -9,3 +9,21 @@ export interface IUserData {
   phone: string;
   razao_social: string;
 }
+
+// Criar usuário
+export interface ISignUpCredentials {
+  razao_social: string;
+  cnpj: string;
+  phone: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface IEditUser {
+  user_id: string;
+  razao_social?: string;
+  cnpj?: string;
+  phone?: string;
+  email?: string;
+}
