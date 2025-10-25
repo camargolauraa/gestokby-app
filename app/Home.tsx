@@ -1,5 +1,6 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   Pressable,
@@ -13,6 +14,11 @@ import Colors from "@/app/constants/Colors";
 import FooterSignedUp from "@/components/FooterSignedUp";
 import HeaderPrincipal from "@/components/HeaderPrincipal";
 import Search from "@/components/Search";
+import { IUserData } from "@/interfaces/IAuth";
+
+const STORAGE_KEYS = {
+  USER: "@meuApp:user",
+};
 
 // Constante com dados de exemplo para a lista de produtos
 const DUMMY_PRODUCTS = [
@@ -52,14 +58,44 @@ export default function Home() {
   const navigation = useNavigation<any>();
   const [isSearchVisible, setIsSearchVisible] = useState(false);
 
+  const [userData, setUserData] = useState<IUserData | null>(null);
+  console.log("User Data:", userData);
+
+  useEffect(() => {
+    async function loadUserData() {
+      try {
+        // Tenta buscar a string do usuário no storage
+        const storedUserString = await AsyncStorage.getItem(STORAGE_KEYS.USER);
+
+        if (storedUserString) {
+          // Se encontrou, converte de volta para objeto
+          const user = JSON.parse(storedUserString) as IUserData;
+          setUserData(user);
+          console.log("User Data:", user);
+        } else {
+          console.log("Nenhum dado de usuário encontrado.");
+          navigation.navigate("Login");
+        }
+      } catch (e) {
+        console.error("Falha ao carregar dados do usuário", e);
+      }
+    }
+
+    loadUserData();
+  }, []);
+
   return (
     <View style={styles.background}>
       <HeaderPrincipal />
       {/* Bloco de Informações do Administrador */}
       <View style={styles.adminInfoContainer}>
-        <Text style={styles.adminName}>ADMINISTRADOR - Nome</Text>
-        <Text style={styles.companyDetails}>Empresa XXXXXXX XXXXXX</Text>
-        <Text style={styles.companyDetails}>CNPJ: XX.XXX.XXX/XXXX-XX</Text>
+        <Text style={styles.adminName}>CONTA DE ADMINISTRADOR</Text>
+        <Text style={styles.companyDetails}>
+          Empresa: {userData ? userData.razao_social : "Carregando..."}
+        </Text>
+        <Text style={styles.companyDetails}>
+          CNPJ: {userData ? userData.cnpj : "Carregando..."}
+        </Text>
       </View>
       {/* Bloco de Navegação */}
       <View style={styles.listHeader}>

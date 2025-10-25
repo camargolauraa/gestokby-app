@@ -1,5 +1,9 @@
 import React from "react";
 
+import { ILogin } from "../interfaces/IAuth";
+
+import { signIn } from "../services/auth";
+
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
@@ -15,19 +19,26 @@ export default function SignIn() {
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
 
-  // SUBSTITUIR COM O BACKEND
-  const checkCredentials = (emailInput: string, passwordInput: string) => {
-    const mockUser = { email: "demo@company.com", password: "123456" };
-    return emailInput === mockUser.email && passwordInput === mockUser.password;
-  };
-
-  const handleSignIn = () => {
-    if (checkCredentials(email.trim(), password)) {
-      setError("");
-    } else {
-      setError("Senha e/ou e-mail incorretos");
+  const handleSignIn = async () => {
+    const credentials: ILogin = { login: email, password: password };
+    // console.log(credentials);
+    try {
+      const response = await signIn(credentials);
+      console.log(response);
+      if (response && response.error) {
+        setError(response.error);
+      }
+      if (response && response.token) {
+        navigation.navigate("Home");
+      }
+    } catch (error) {
+      setError("Erro ao fazer login");
     }
   };
+
+  // useEffect(() => {
+  //   console.log(email, password);
+  // }, [email, password]);
 
   return (
     <View style={styles.background}>
@@ -72,8 +83,7 @@ export default function SignIn() {
         <Pressable
           style={{ ...styles.button, alignSelf: "flex-end" }}
           onPress={() => {
-            // handleSignIn();
-            navigation.navigate("Home");
+            handleSignIn();
           }}
         >
           <Text style={styles.buttonText}>Entrar</Text>
